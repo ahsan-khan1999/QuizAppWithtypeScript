@@ -55,6 +55,8 @@ function App() {
   return (
     <div className="App">
       <h1>Type Script Quiz App</h1>
+
+
       {
         gameOver || userAnswers.length === 5 ?
           <button className="begin" onClick={startQuiz}>Start Quiz</button> : null

@@ -7,12 +7,12 @@ const Questions: React.FC<QuestionsSchema> = ({ question, answers, callback, use
     return (
         <div>
             <p className="quesNum">{questionNumber} / {totalQuestions} </p>
-            <p dangerouslySetInnerHTML={{ __html: question }} />
+            <p dangerouslySetInnerHTML={{ __html: question }} style={{fontSize:22,fontWeight:'bolder'}}/>
             <div>
                 {
                     answers.map((answer,ind) => (
                         <div key={ind}>
-                            <button disabled={userAnswer} value={answer} onClick={callback}>
+                            <button disabled={userAnswer ? true : false } value={answer} onClick={callback} style={{height:80,backgroundColor:'pink',width:80}}>
                                 <span dangerouslySetInnerHTML={{ __html: answer }} />
                             </button>
                         </div>
