@@ -1,14 +1,7 @@
 import React from 'react'
+import {QuestionsSchema} from '../Types/Type'
 
 
-type QuestionsSchema = {
-    question: string;
-    answers: string[];
-    callback: any;
-    userAnswer: any;
-    questionNumber: number;
-    totalQuestions: number;
-}
 // first we have to specify this comp to a functioal comp then pass these type to this comp
 const Questions: React.FC<QuestionsSchema> = ({ question, answers, callback, userAnswer, questionNumber, totalQuestions }) => {
     return (

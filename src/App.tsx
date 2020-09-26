@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { QuestionState, getQuestions } from './service/api';
+import { getQuestions } from './service/api';
+import { QuestionState, AnswerObject } from './Types/Type'
 import './App.css';
 import Questions from './Components/Questions';
 
@@ -13,12 +14,7 @@ function App() {
   const [score, setScore] = useState(0);
   const [gameOver, setGameOver] = useState(true);
 
-  type AnswerObject = {
-    question: string;
-    answer: string;
-    correct: boolean;
-    correctAnswer: string;
-  }
+
   const startQuiz = async () => {
     setLoading(true);
     setGameOver(false);
@@ -34,25 +30,25 @@ function App() {
 
   }
   const checkAnswer = (e: React.MouseEvent<HTMLButtonElement>) => {
-    if(!gameOver){
+    if (!gameOver) {
       const answer = e.currentTarget.value;
       const correct = questions[number].correct_answer === answer;
-      if (correct) setScore(score => score +1);
+      if (correct) { setScore(score => score + 1) };
       const answerObject = {
-        question:questions[number].question,
+        question: questions[number].question,
         answer,
         correct,
-        correctAnswer:questions[number].correct_answer
+        correctAnswer: questions[number].correct_answer
       };
-      setUserAnswers(prev=> [...prev,answerObject]);
+      setUserAnswers(userAnswers => [...userAnswers, answerObject]);
     }
   }
   const nextQuestion = () => {
-    const nextQuestion = number +1;
-    if(nextQuestion !== 5){
+    const nextQuestion = number + 1;
+    if (nextQuestion !== 5) {
       setNumber(nextQuestion);
     }
-    else{
+    else {
       setGameOver(true);
     }
   }
@@ -64,7 +60,7 @@ function App() {
           <button className="begin" onClick={startQuiz}>Start Quiz</button> : null
       }
 
-    {!gameOver ? <h4 className='score'>Score : {score}</h4> : null}
+      {!gameOver ? <h4 className='score'>Score : {score}</h4> : null}
       {loading ? <h2>Loading Question .....</h2> : null}
       {!loading && !gameOver ? <Questions questionNumber={number + 1} totalQuestions={5} question={questions[number].question} answers={questions[number].answers} userAnswer={userAnswers ? userAnswers[number] : undefined} callback={checkAnswer} /> : null}
       {!loading && !gameOver && userAnswers.length === number + 1 && number !== 5 ? <button className="next" onClick={nextQuestion}>Next Questions </button> : null}
